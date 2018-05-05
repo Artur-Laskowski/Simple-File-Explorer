@@ -1,4 +1,4 @@
-﻿namespace pt_lab2
+﻿namespace fileExplorer
 {
     partial class Form2
     {

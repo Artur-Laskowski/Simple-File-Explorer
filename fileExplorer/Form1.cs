@@ -3,7 +3,7 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
-namespace pt_lab2
+namespace fileExplorer
 {
     public partial class Form1 : Form
     {
@@ -28,12 +28,12 @@ namespace pt_lab2
             if (res == DialogResult.OK)
             {
                 treeView1.Nodes.Clear();
-                treeView1.Nodes.Add(WezelFolderu(new DirectoryInfo(fbd.SelectedPath)));
+                treeView1.Nodes.Add(DirectoryNode(new DirectoryInfo(fbd.SelectedPath)));
             }
         }
 
 
-        private static TreeNode WezelFolderu(DirectoryInfo di)
+        private static TreeNode DirectoryNode(DirectoryInfo di)
         {
             TreeNode tn;
             DirectoryInfo[] dirs;
@@ -50,26 +50,26 @@ namespace pt_lab2
             }
             foreach (var dir in dirs)
             {
-                TreeNode nowyWezel = WezelFolderu(dir);
-                if (nowyWezel != null)
+                TreeNode newNode = DirectoryNode(dir);
+                if (newNode != null)
                 {
-                    tn.Nodes.Add(nowyWezel);
+                    tn.Nodes.Add(newNode);
                 }
             }
 
             foreach (var file in files)
             {
-                TreeNode nowyWezel = WezelPliku(file);
-                if (nowyWezel != null)
+                TreeNode newNode = FileNode(file);
+                if (newNode != null)
                 {
-                    tn.Nodes.Add(nowyWezel);
+                    tn.Nodes.Add(newNode);
                 }
             }
 
             return tn;
         }
 
-        private static TreeNode WezelPliku(FileInfo fi)
+        private static TreeNode FileNode(FileInfo fi)
         {
             var tn = new TreeNode(fi.Name) {Tag = fi};
             return tn;
@@ -92,7 +92,7 @@ namespace pt_lab2
                     }
                     catch (Exception exception)
                     {
-                        MessageBox.Show("Nie udało się usunąć folderu!\n" + exception.Message);
+                        MessageBox.Show("Unable to delete the directory!\n" + exception.Message);
                         return;
                     }
                 }
@@ -104,7 +104,7 @@ namespace pt_lab2
                     }
                     catch (Exception exception)
                     {
-                        MessageBox.Show("Nie udało się usunąć pliku!\n" + exception.Message);
+                        MessageBox.Show("Unable to delete the file!\n" + exception.Message);
                         return;
                     }
                 }
@@ -134,10 +134,10 @@ namespace pt_lab2
             var info2 = (DirectoryInfo) info;
 
             foreach (var dir in info2.GetDirectories())
-                node.Nodes.Add(WezelFolderu(dir));
+                node.Nodes.Add(DirectoryNode(dir));
 
             foreach (var file in info2.GetFiles())
-                node.Nodes.Add(WezelPliku(file));
+                node.Nodes.Add(FileNode(file));
         }
 
         private void treeView1_AfterSelect_1(object sender, TreeViewEventArgs e)

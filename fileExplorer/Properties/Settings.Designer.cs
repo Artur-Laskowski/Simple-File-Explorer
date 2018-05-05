@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace pt_lab2.Properties
+namespace fileExplorer.Properties
 {
 
 

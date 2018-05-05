@@ -3,7 +3,7 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
-namespace pt_lab2
+namespace fileExplorer
 {
     public partial class Form2 : Form
     {
